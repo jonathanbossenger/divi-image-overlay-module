@@ -2,10 +2,10 @@
 /*
  * Plugin Name: Divi Image Overlay
  * Version: 1.0
- * Plugin URI: http://www.psykrotek.co.za/
- * Description: This is an empty shell for your next WordPress plugin.
- * Author: Jonathan Bossenger
- * Author URI: http://www.psykrotek.co.za/
+ * Plugin URI: http://www.atlanticwave.co/
+ * Description: Create image overlays.
+ * Author: Atlantic Wave
+ * Author URI: http://www.atlanticwave.co/
  * Requires at least: 4.0
  * Tested up to: 4.0
  *
@@ -13,35 +13,34 @@
  * Domain Path: /lang/
  *
  * @package WordPress
- * @author Jonathan Bossenger
+ * @author Atlantic Wave
  * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // do your stuff here
-<?php
+function aw_load_plugin_scripts() {
+	$plugin_url = plugin_dir_url( __FILE__ );
+	wp_enqueue_style( 'aw_style', $plugin_url . 'css/style.css' );
+	wp_enqueue_script( 'aw_functions', $plugin_url . 'js/functions.js',  array('jquery') );
+}
+add_action( 'wp_enqueue_scripts', 'aw_load_plugin_scripts' );
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-function imgo_plugin_setup() {
+function aw_image_overlay_setup() {
 
 	if ( class_exists('ET_Builder_Module')) {
 
-		class IMGO_Builder_Module_Image extends ET_Builder_Module {
+		class AW_Builder_Module_Image_Overlay extends ET_Builder_Module {
 			function init() {
 				$this->name = esc_html__( 'Image Overlay', 'et_builder' );
-				$this->slug = 'imgo_image';
+				$this->slug = 'aw_image_overlay';
 
 				$this->whitelisted_fields = array(
 					'src',
 					'alt',
 					'title_text',
-					'show_in_lightbox',
+					//'show_in_lightbox',
 					'url',
 					'url_new_window',
 					'animation',
@@ -53,23 +52,24 @@ function imgo_plugin_setup() {
 					'max_width',
 					'force_fullwidth',
 					'always_center_on_mobile',
-					'use_overlay',
-					'overlay_icon_color',
-					'hover_overlay_color',
-					'hover_icon',
+					//'use_overlay',
+					'overlay_src',
+					//'overlay_icon_color',
+					//'hover_overlay_color',
+					//'hover_icon',
 					'max_width_tablet',
 					'max_width_phone',
 				);
 
 				$this->fields_defaults = array(
-					'show_in_lightbox'        => array( 'off' ),
+					//'show_in_lightbox'        => array( 'off' ),
 					'url_new_window'          => array( 'off' ),
 					'animation'               => array( 'left' ),
 					'sticky'                  => array( 'off' ),
 					'align'                   => array( 'left' ),
 					'force_fullwidth'         => array( 'off' ),
 					'always_center_on_mobile' => array( 'on' ),
-					'use_overlay'             => array( 'off' ),
+					//'use_overlay'             => array( 'off' ),
 				);
 
 				$this->advanced_options = array(
@@ -135,7 +135,7 @@ function imgo_plugin_setup() {
 						'option_category' => 'basic_option',
 						'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
 					),
-					'show_in_lightbox' => array(
+					/*'show_in_lightbox' => array(
 						'label'             => esc_html__( 'Open in Lightbox', 'et_builder' ),
 						'type'              => 'yes_no_button',
 						'option_category'   => 'configuration',
@@ -149,7 +149,7 @@ function imgo_plugin_setup() {
 							'#et_pb_use_overlay'
 						),
 						'description'       => esc_html__( 'Here you can choose whether or not the image should open in Lightbox. Note: if you select to open the image in Lightbox, url options below will be ignored.', 'et_builder' ),
-					),
+					),*/
 					'url' => array(
 						'label'           => esc_html__( 'Link URL', 'et_builder' ),
 						'type'            => 'text',
@@ -171,7 +171,7 @@ function imgo_plugin_setup() {
 						'depends_show_if'   => 'off',
 						'description'       => esc_html__( 'Here you can choose whether or not your link opens in a new window', 'et_builder' ),
 					),
-					'use_overlay' => array(
+					/*'use_overlay' => array(
 						'label'             => esc_html__( 'Image Overlay', 'et_builder' ),
 						'type'              => 'yes_no_button',
 						'option_category'   => 'layout',
@@ -186,8 +186,17 @@ function imgo_plugin_setup() {
 						),
 						'depends_default'   => true,
 						'description'       => esc_html__( 'If enabled, an overlay color and icon will be displayed when a visitors hovers over the image', 'et_builder' ),
+					),*/
+					'overlay_src' => array(
+						'label'              => esc_html__( 'Overlay Image URL', 'et_builder' ),
+						'type'               => 'upload',
+						'option_category'    => 'basic_option',
+						'upload_button_text' => esc_attr__( 'Upload an image', 'et_builder' ),
+						'choose_text'        => esc_attr__( 'Choose an Image', 'et_builder' ),
+						'update_text'        => esc_attr__( 'Set As Image', 'et_builder' ),
+						'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 					),
-					'overlay_icon_color' => array(
+					/*'overlay_icon_color' => array(
 						'label'             => esc_html__( 'Overlay Icon Color', 'et_builder' ),
 						'type'              => 'color',
 						'custom_color'      => true,
@@ -210,7 +219,7 @@ function imgo_plugin_setup() {
 						'renderer_with_field' => true,
 						'depends_show_if'     => 'on',
 						'description'       => esc_html__( 'Here you can define a custom icon for the overlay', 'et_builder' ),
-					),
+					),*/
 					'animation' => array(
 						'label'             => esc_html__( 'Animation', 'et_builder' ),
 						'type'              => 'select',
@@ -318,7 +327,7 @@ function imgo_plugin_setup() {
 				$animation               = $this->shortcode_atts['animation'];
 				$url                     = $this->shortcode_atts['url'];
 				$url_new_window          = $this->shortcode_atts['url_new_window'];
-				$show_in_lightbox        = $this->shortcode_atts['show_in_lightbox'];
+				//$show_in_lightbox        = $this->shortcode_atts['show_in_lightbox'];
 				$sticky                  = $this->shortcode_atts['sticky'];
 				$align                   = $this->shortcode_atts['align'];
 				$max_width               = $this->shortcode_atts['max_width'];
@@ -326,10 +335,11 @@ function imgo_plugin_setup() {
 				$max_width_phone         = $this->shortcode_atts['max_width_phone'];
 				$force_fullwidth         = $this->shortcode_atts['force_fullwidth'];
 				$always_center_on_mobile = $this->shortcode_atts['always_center_on_mobile'];
-				$overlay_icon_color      = $this->shortcode_atts['overlay_icon_color'];
-				$hover_overlay_color     = $this->shortcode_atts['hover_overlay_color'];
-				$hover_icon              = $this->shortcode_atts['hover_icon'];
-				$use_overlay             = $this->shortcode_atts['use_overlay'];
+				$always_center_on_mobile = $this->shortcode_atts['always_center_on_mobile'];
+				//$overlay_icon_color      = $this->shortcode_atts['overlay_icon_color'];
+				//$hover_overlay_color     = $this->shortcode_atts['hover_overlay_color'];
+				//$hover_icon              = $this->shortcode_atts['hover_icon'];
+				$overlay_src             = $this->shortcode_atts['overlay_src'];
 
 				$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
 
@@ -337,8 +347,8 @@ function imgo_plugin_setup() {
 					$module_class .= ' et_always_center_on_mobile';
 				}
 
-				// overlay can be applied only if image has link or if lightbox enabled
-				$is_overlay_applied = 'on' === $use_overlay && ( 'on' === $show_in_lightbox || ( 'off' === $show_in_lightbox && '' !== $url ) ) ? 'on' : 'off';
+				// overlay is on by default
+				$is_overlay_applied = 'on'; // === $use_overlay ? 'on' : 'off';
 
 				if ( '' !== $max_width_tablet || '' !== $max_width_phone || '' !== $max_width ) {
 					$max_width_values = array(
@@ -378,6 +388,11 @@ function imgo_plugin_setup() {
 				}
 
 				if ( 'on' === $is_overlay_applied ) {
+					$overlay_output = sprintf(
+						'<img class="overlay" src="%1$s" alt="" />', $overlay_src
+					);
+
+					/*
 					if ( '' !== $overlay_icon_color ) {
 						ET_Builder_Element::set_style( $function_name, array(
 							'selector'    => '%%order_class%% .et_overlay:before',
@@ -410,10 +425,11 @@ function imgo_plugin_setup() {
 						( '' !== $hover_icon ? ' et_pb_inline_icon' : '' ),
 						$data_icon
 					);
+					*/
 				}
 
 				$output = sprintf(
-					'<img src="%1$s" alt="%2$s"%3$s />
+					'<img class="main" src="%1$s" alt="%2$s"%3$s />
 			%4$s',
 					esc_url( $src ),
 					esc_attr( $alt ),
@@ -421,13 +437,14 @@ function imgo_plugin_setup() {
 					'on' === $is_overlay_applied ? $overlay_output : ''
 				);
 
-				if ( 'on' === $show_in_lightbox ) {
+				/*if ( 'on' === $show_in_lightbox ) {
 					$output = sprintf( '<a href="%1$s" class="et_pb_lightbox_image" title="%3$s">%2$s</a>',
 						esc_url( $src ),
 						$output,
 						esc_attr( $alt )
 					);
-				} else if ( '' !== $url ) {
+				} else */
+				if ( '' !== $url ) {
 					$output = sprintf( '<a href="%1$s"%3$s>%2$s</a>',
 						esc_url( $url ),
 						$output,
@@ -446,18 +463,20 @@ function imgo_plugin_setup() {
 					( '' !== $module_class ? sprintf( ' %1$s', esc_attr( ltrim( $module_class ) ) ) : '' ),
 					( 'on' === $sticky ? esc_attr( ' et_pb_image_sticky' ) : '' ),
 					( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
-					'on' === $is_overlay_applied ? ' et_pb_has_overlay' : ''
+					'on' === $is_overlay_applied ? ' aw_image_overlay' : ''
 				);
 
 				return $output;
 			}
 		}
 
-		//new ET_Builder_Module_Image;
+		new AW_Builder_Module_Image_Overlay;
+		$aw_builder_module_image_overlay = new AW_Builder_Module_Image_Overlay();
+		add_shortcode( 'aw_image_overlay', array($aw_builder_module_image_overlay, '_shortcode_callback') );
 
-		$imgo_builder_module_image_item = new IMGO_Builder_Module_Image();
-		add_shortcode( 'imgo_image', array($imgo_builder_module_image_item, '_shortcode_callback') );
-
+	}else {
+		die('The builder class is not yet ready');
 	}
 }
-add_action('wp', 'imgo_plugin_setup', 9999);
+add_action('et_builder_ready', 'aw_image_overlay_setup');
+//add_action('wp', 'aw_plugin_setup', 9999);
