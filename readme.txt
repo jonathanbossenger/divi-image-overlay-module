@@ -4,7 +4,7 @@ Donate link: http://atlanticwave.co
 Tags: wordpress, plugin, template
 Requires at least: 4.0
 Tested up to: 4.4.2
-Stable tag: 1.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ An Image Overlay module for Divi Page Builder
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.0 =
 * 2016-04-06
 * Initial release
 
