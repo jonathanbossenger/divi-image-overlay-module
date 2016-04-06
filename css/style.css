@@ -1,7 +1,10 @@
-.aw_image_overlay img.overlay {
+.et_pb_image_overlay {
+    position: relative;
+}
+.et_pb_image_overlay img.overlay {
     display: block;
-    position: absolute;
-    top: 27px;
+    position:absolute;
+    top: 0;
     left: 0;
     opacity: 0;
     z-index: 1;

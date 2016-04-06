@@ -34,7 +34,7 @@ function aw_image_overlay_setup() {
 		class AW_Builder_Module_Image_Overlay extends ET_Builder_Module {
 			function init() {
 				$this->name = esc_html__( 'Image Overlay', 'et_builder' );
-				$this->slug = 'aw_image_overlay';
+				$this->slug = 'et_pb_image_overlay';
 
 				$this->whitelisted_fields = array(
 					'src',
@@ -429,8 +429,7 @@ function aw_image_overlay_setup() {
 				}
 
 				$output = sprintf(
-					'<img class="main" src="%1$s" alt="%2$s"%3$s />
-			%4$s',
+					'<img class="main" src="%1$s" alt="%2$s"%3$s />%4$s',
 					esc_url( $src ),
 					esc_attr( $alt ),
 					( '' !== $title_text ? sprintf( ' title="%1$s"', esc_attr( $title_text ) ) : '' ),
@@ -463,7 +462,7 @@ function aw_image_overlay_setup() {
 					( '' !== $module_class ? sprintf( ' %1$s', esc_attr( ltrim( $module_class ) ) ) : '' ),
 					( 'on' === $sticky ? esc_attr( ' et_pb_image_sticky' ) : '' ),
 					( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
-					'on' === $is_overlay_applied ? ' aw_image_overlay' : ''
+					'on' === $is_overlay_applied ? ' et_pb_image_overlay' : ''
 				);
 
 				return $output;
@@ -472,7 +471,7 @@ function aw_image_overlay_setup() {
 
 		new AW_Builder_Module_Image_Overlay;
 		$aw_builder_module_image_overlay = new AW_Builder_Module_Image_Overlay();
-		add_shortcode( 'aw_image_overlay', array($aw_builder_module_image_overlay, '_shortcode_callback') );
+		add_shortcode( 'et_pb_image_overlay', array($aw_builder_module_image_overlay, '_shortcode_callback') );
 
 	}else {
 		die('The builder class is not yet ready');
