@@ -19,7 +19,6 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// do your stuff here
 function aw_load_plugin_scripts() {
 	$plugin_url = plugin_dir_url( __FILE__ );
 	wp_enqueue_style( 'aw_style', $plugin_url . 'css/style.css' );
@@ -40,7 +39,6 @@ function aw_image_overlay_setup() {
 					'src',
 					'alt',
 					'title_text',
-					//'show_in_lightbox',
 					'url',
 					'url_new_window',
 					'animation',
@@ -52,24 +50,18 @@ function aw_image_overlay_setup() {
 					'max_width',
 					'force_fullwidth',
 					'always_center_on_mobile',
-					//'use_overlay',
 					'overlay_src',
-					//'overlay_icon_color',
-					//'hover_overlay_color',
-					//'hover_icon',
 					'max_width_tablet',
 					'max_width_phone',
 				);
 
 				$this->fields_defaults = array(
-					//'show_in_lightbox'        => array( 'off' ),
 					'url_new_window'          => array( 'off' ),
 					'animation'               => array( 'left' ),
 					'sticky'                  => array( 'off' ),
 					'align'                   => array( 'left' ),
 					'force_fullwidth'         => array( 'off' ),
 					'always_center_on_mobile' => array( 'on' ),
-					//'use_overlay'             => array( 'off' ),
 				);
 
 				$this->advanced_options = array(
@@ -135,21 +127,6 @@ function aw_image_overlay_setup() {
 						'option_category' => 'basic_option',
 						'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
 					),
-					/*'show_in_lightbox' => array(
-						'label'             => esc_html__( 'Open in Lightbox', 'et_builder' ),
-						'type'              => 'yes_no_button',
-						'option_category'   => 'configuration',
-						'options'           => array(
-							'off' => esc_html__( "No", 'et_builder' ),
-							'on'  => esc_html__( 'Yes', 'et_builder' ),
-						),
-						'affects'           => array(
-							'#et_pb_url',
-							'#et_pb_url_new_window',
-							'#et_pb_use_overlay'
-						),
-						'description'       => esc_html__( 'Here you can choose whether or not the image should open in Lightbox. Note: if you select to open the image in Lightbox, url options below will be ignored.', 'et_builder' ),
-					),*/
 					'url' => array(
 						'label'           => esc_html__( 'Link URL', 'et_builder' ),
 						'type'            => 'text',
@@ -171,22 +148,6 @@ function aw_image_overlay_setup() {
 						'depends_show_if'   => 'off',
 						'description'       => esc_html__( 'Here you can choose whether or not your link opens in a new window', 'et_builder' ),
 					),
-					/*'use_overlay' => array(
-						'label'             => esc_html__( 'Image Overlay', 'et_builder' ),
-						'type'              => 'yes_no_button',
-						'option_category'   => 'layout',
-						'options'           => array(
-							'off' => esc_html__( 'Off', 'et_builder' ),
-							'on'  => esc_html__( 'On', 'et_builder' ),
-						),
-						'affects'           => array(
-							'#et_pb_overlay_icon_color',
-							'#et_pb_hover_overlay_color',
-							'#et_pb_hover_icon',
-						),
-						'depends_default'   => true,
-						'description'       => esc_html__( 'If enabled, an overlay color and icon will be displayed when a visitors hovers over the image', 'et_builder' ),
-					),*/
 					'overlay_src' => array(
 						'label'              => esc_html__( 'Overlay Image URL', 'et_builder' ),
 						'type'               => 'upload',
@@ -196,30 +157,6 @@ function aw_image_overlay_setup() {
 						'update_text'        => esc_attr__( 'Set As Image', 'et_builder' ),
 						'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 					),
-					/*'overlay_icon_color' => array(
-						'label'             => esc_html__( 'Overlay Icon Color', 'et_builder' ),
-						'type'              => 'color',
-						'custom_color'      => true,
-						'depends_show_if'   => 'on',
-						'description'       => esc_html__( 'Here you can define a custom color for the overlay icon', 'et_builder' ),
-					),
-					'hover_overlay_color' => array(
-						'label'             => esc_html__( 'Hover Overlay Color', 'et_builder' ),
-						'type'              => 'color-alpha',
-						'custom_color'      => true,
-						'depends_show_if'   => 'on',
-						'description'       => esc_html__( 'Here you can define a custom color for the overlay', 'et_builder' ),
-					),
-					'hover_icon' => array(
-						'label'               => esc_html__( 'Hover Icon Picker', 'et_builder' ),
-						'type'                => 'text',
-						'option_category'     => 'configuration',
-						'class'               => array( 'et-pb-font-icon' ),
-						'renderer'            => 'et_pb_get_font_icon_list',
-						'renderer_with_field' => true,
-						'depends_show_if'     => 'on',
-						'description'       => esc_html__( 'Here you can define a custom icon for the overlay', 'et_builder' ),
-					),*/
 					'animation' => array(
 						'label'             => esc_html__( 'Animation', 'et_builder' ),
 						'type'              => 'select',
@@ -327,7 +264,6 @@ function aw_image_overlay_setup() {
 				$animation               = $this->shortcode_atts['animation'];
 				$url                     = $this->shortcode_atts['url'];
 				$url_new_window          = $this->shortcode_atts['url_new_window'];
-				//$show_in_lightbox        = $this->shortcode_atts['show_in_lightbox'];
 				$sticky                  = $this->shortcode_atts['sticky'];
 				$align                   = $this->shortcode_atts['align'];
 				$max_width               = $this->shortcode_atts['max_width'];
@@ -335,10 +271,6 @@ function aw_image_overlay_setup() {
 				$max_width_phone         = $this->shortcode_atts['max_width_phone'];
 				$force_fullwidth         = $this->shortcode_atts['force_fullwidth'];
 				$always_center_on_mobile = $this->shortcode_atts['always_center_on_mobile'];
-				$always_center_on_mobile = $this->shortcode_atts['always_center_on_mobile'];
-				//$overlay_icon_color      = $this->shortcode_atts['overlay_icon_color'];
-				//$hover_overlay_color     = $this->shortcode_atts['hover_overlay_color'];
-				//$hover_icon              = $this->shortcode_atts['hover_icon'];
 				$overlay_src             = $this->shortcode_atts['overlay_src'];
 
 				$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
@@ -391,41 +323,6 @@ function aw_image_overlay_setup() {
 					$overlay_output = sprintf(
 						'<img class="overlay" src="%1$s" alt="" />', $overlay_src
 					);
-
-					/*
-					if ( '' !== $overlay_icon_color ) {
-						ET_Builder_Element::set_style( $function_name, array(
-							'selector'    => '%%order_class%% .et_overlay:before',
-							'declaration' => sprintf(
-								'color: %1$s !important;',
-								esc_html( $overlay_icon_color )
-							),
-						) );
-					}
-
-					if ( '' !== $hover_overlay_color ) {
-						ET_Builder_Element::set_style( $function_name, array(
-							'selector'    => '%%order_class%% .et_overlay',
-							'declaration' => sprintf(
-								'background-color: %1$s;',
-								esc_html( $hover_overlay_color )
-							),
-						) );
-					}
-
-					$data_icon = '' !== $hover_icon
-						? sprintf(
-							' data-icon="%1$s"',
-							esc_attr( et_pb_process_font_icon( $hover_icon ) )
-						)
-						: '';
-
-					$overlay_output = sprintf(
-						'<span class="et_overlay%1$s"%2$s></span>',
-						( '' !== $hover_icon ? ' et_pb_inline_icon' : '' ),
-						$data_icon
-					);
-					*/
 				}
 
 				$output = sprintf(
@@ -436,13 +333,6 @@ function aw_image_overlay_setup() {
 					'on' === $is_overlay_applied ? $overlay_output : ''
 				);
 
-				/*if ( 'on' === $show_in_lightbox ) {
-					$output = sprintf( '<a href="%1$s" class="et_pb_lightbox_image" title="%3$s">%2$s</a>',
-						esc_url( $src ),
-						$output,
-						esc_attr( $alt )
-					);
-				} else */
 				if ( '' !== $url ) {
 					$output = sprintf( '<a href="%1$s"%3$s>%2$s</a>',
 						esc_url( $url ),
@@ -478,4 +368,3 @@ function aw_image_overlay_setup() {
 	}
 }
 add_action('et_builder_ready', 'aw_image_overlay_setup');
-//add_action('wp', 'aw_plugin_setup', 9999);
