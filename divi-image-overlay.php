@@ -39,6 +39,7 @@ function aw_image_overlay_setup() {
 					'src',
 					'alt',
 					'title_text',
+					'open_link',
 					'url',
 					'url_new_window',
 					'animation',
@@ -56,6 +57,7 @@ function aw_image_overlay_setup() {
 				);
 
 				$this->fields_defaults = array(
+					'open_link'          	  => array( 'off' ),
 					'url_new_window'          => array( 'off' ),
 					'animation'               => array( 'left' ),
 					'sticky'                  => array( 'off' ),
@@ -127,14 +129,25 @@ function aw_image_overlay_setup() {
 						'option_category' => 'basic_option',
 						'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
 					),
+					'open_link' => array(
+						'label'             => esc_html__( 'Open a URL', 'et_builder' ),
+						'type'              => 'yes_no_button',
+						'option_category'   => 'configuration',
+						'options'           => array(
+							'off' => esc_html__( "No", 'et_builder' ),
+							'on'  => esc_html__( 'Yes', 'et_builder' ),
+						),
+						'affects'           => array(
+							'#et_pb_url',
+							'#et_pb_url_new_window',
+						),
+						'description'       => esc_html__( 'Here you can choose whether or not the image should open a URL.', 'et_builder' ),
+					),
 					'url' => array(
 						'label'           => esc_html__( 'Link URL', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'basic_option',
-						'depends_show_if' => 'off',
-						'affects'         => array(
-							'#et_pb_use_overlay',
-						),
+						'depends_show_if' => 'on',
 						'description'     => esc_html__( 'If you would like your image to be a link, input your destination URL here. No link will be created if this field is left blank.', 'et_builder' ),
 					),
 					'url_new_window' => array(
@@ -145,7 +158,7 @@ function aw_image_overlay_setup() {
 							'off' => esc_html__( 'In The Same Window', 'et_builder' ),
 							'on'  => esc_html__( 'In The New Tab', 'et_builder' ),
 						),
-						'depends_show_if'   => 'off',
+						'depends_show_if'   => 'on',
 						'description'       => esc_html__( 'Here you can choose whether or not your link opens in a new window', 'et_builder' ),
 					),
 					'overlay_src' => array(
@@ -262,6 +275,7 @@ function aw_image_overlay_setup() {
 				$alt                     = $this->shortcode_atts['alt'];
 				$title_text              = $this->shortcode_atts['title_text'];
 				$animation               = $this->shortcode_atts['animation'];
+				$open_link               = $this->shortcode_atts['open_link'];
 				$url                     = $this->shortcode_atts['url'];
 				$url_new_window          = $this->shortcode_atts['url_new_window'];
 				$sticky                  = $this->shortcode_atts['sticky'];

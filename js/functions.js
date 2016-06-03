@@ -2,12 +2,38 @@
 jQuery(function ($) {
     var overlay_image = $( '.et_pb_image_overlay .overlay' );
     if(isMobile.any){
-        overlay_image.click(function() {
-            if ( $( this ).hasClass("aw-show-overlay") ) {
-                $( this ).removeClass( "aw-show-overlay" );
+        overlay_image.click(function(event) {
+
+            event.preventDefault();
+
+            var thisImage = $( this );
+            var thisImageHref = thisImage.data('href');
+            var thisImageTarget = thisImage.data('target');
+
+            if ( !thisImageHref ) {
+                var anchor = thisImage.parents('a');
+                if (anchor){
+                    var anchorHref = anchor.attr('href');
+                    var anchorTarget = anchor.attr('target');
+                    if ( anchorHref && anchorHref != '' ){
+                        thisImage.data('href', anchorHref);
+                        thisImage.data('target', anchorTarget);
+                    }
+                }
             }else {
-                $( this ).addClass( "aw-show-overlay" );
+                if (thisImageTarget){
+                    window.open(thisImageHref,thisImageTarget);
+                }else {
+                    window.open(thisImageHref);
+                }
             }
+
+            if ( thisImage.hasClass("aw-show-overlay") ) {
+                thisImage.removeClass( "aw-show-overlay" );
+            }else {
+                thisImage.addClass( "aw-show-overlay" );
+            }
+
         });
     }else {
         overlay_image.hover(
