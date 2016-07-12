@@ -359,8 +359,10 @@ function aw_image_overlay_setup() {
 
 				$output = sprintf(
 					'<div%5$s class="et_pb_module et-waypoint et_pb_image%2$s%3$s%4$s%6$s">
-				%1$s
-			</div>',
+						<div class="et_pb_image_overlay_container">
+							%1$s
+						</div>
+					</div>',
 					$output,
 					esc_attr( " et_pb_animation_{$animation}" ),
 					( '' !== $module_class ? sprintf( ' %1$s', esc_attr( ltrim( $module_class ) ) ) : '' ),
