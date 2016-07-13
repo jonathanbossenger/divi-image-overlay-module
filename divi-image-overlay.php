@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Divi Image Overlay
- * Version: 1.1.0
+ * Version: 1.1.1
  * Plugin URI: http://www.atlanticwave.co/
  * Description: Create image overlays.
  * Author: Atlantic Wave
