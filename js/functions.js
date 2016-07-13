@@ -21,10 +21,10 @@ jQuery(function ($) {
                     }
                 }
             }else {
-                if (thisImageTarget){
-                    window.open(thisImageHref,thisImageTarget);
-                }else {
+                if ( thisImageTarget && '_blank' == thisImageTarget ){
                     window.open(thisImageHref);
+                }else {
+                    window.location.href = thisImageHref;
                 }
             }
 

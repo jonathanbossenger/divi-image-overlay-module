@@ -44,7 +44,6 @@ function aw_image_overlay_setup() {
 					'url_new_window',
 					'animation',
 					'sticky',
-					'align',
 					'admin_label',
 					'module_id',
 					'module_class',
@@ -187,17 +186,6 @@ function aw_image_overlay_setup() {
 						),
 						'description'       => esc_html__( 'Here you can choose whether or not the image should have a space below it.', 'et_builder' ),
 					),
-					'align' => array(
-						'label'           => esc_html__( 'Image Alignment', 'et_builder' ),
-						'type'            => 'select',
-						'option_category' => 'layout',
-						'options' => array(
-							'left'   => esc_html__( 'Left', 'et_builder' ),
-							'center' => esc_html__( 'Center', 'et_builder' ),
-							'right'  => esc_html__( 'Right', 'et_builder' ),
-						),
-						'description'       => esc_html__( 'Here you can choose the image alignment.', 'et_builder' ),
-					),
 					'max_width' => array(
 						'label'           => esc_html__( 'Image Max Width', 'et_builder' ),
 						'type'            => 'text',
@@ -279,7 +267,6 @@ function aw_image_overlay_setup() {
 				$url                     = $this->shortcode_atts['url'];
 				$url_new_window          = $this->shortcode_atts['url_new_window'];
 				$sticky                  = $this->shortcode_atts['sticky'];
-				$align                   = $this->shortcode_atts['align'];
 				$max_width               = $this->shortcode_atts['max_width'];
 				$max_width_tablet        = $this->shortcode_atts['max_width_tablet'];
 				$max_width_phone         = $this->shortcode_atts['max_width_phone'];
@@ -313,26 +300,6 @@ function aw_image_overlay_setup() {
 					) );
 				}
 
-				if ( $this->fields_defaults['align'][0] !== $align ) {
-					ET_Builder_Element::set_style( $function_name, array(
-						'selector'    => '%%order_class%%',
-						'declaration' => sprintf(
-							'text-align: %1$s;',
-							esc_html( $align )
-						),
-					) );
-				}
-
-				if ( 'center' !== $align ) {
-					ET_Builder_Element::set_style( $function_name, array(
-						'selector'    => '%%order_class%%',
-						'declaration' => sprintf(
-							'margin-%1$s: 0;',
-							esc_html( $align )
-						),
-					) );
-				}
-
 				if ( 'on' === $is_overlay_applied ) {
 					$overlay_output = sprintf(
 						'<img class="overlay" src="%1$s" alt="" />', $overlay_src
@@ -355,13 +322,13 @@ function aw_image_overlay_setup() {
 					);
 				}
 
+				$output = '<div class="et_pb_image_overlay_container">' . $output . '</div>';
+
 				$animation = '' === $animation ? ET_Global_Settings::get_value( 'et_pb_image-animation' ) : $animation;
 
 				$output = sprintf(
 					'<div%5$s class="et_pb_module et-waypoint et_pb_image%2$s%3$s%4$s%6$s">
-						<div class="et_pb_image_overlay_container">
 							%1$s
-						</div>
 					</div>',
 					$output,
 					esc_attr( " et_pb_animation_{$animation}" ),
@@ -379,8 +346,6 @@ function aw_image_overlay_setup() {
 		$aw_builder_module_image_overlay = new AW_Builder_Module_Image_Overlay();
 		add_shortcode( 'et_pb_image_overlay', array($aw_builder_module_image_overlay, '_shortcode_callback') );
 
-	}else {
-		die('The builder class is not yet ready');
 	}
 }
 add_action('et_builder_ready', 'aw_image_overlay_setup');
