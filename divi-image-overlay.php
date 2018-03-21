@@ -17,18 +17,21 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 function aw_load_plugin_scripts() {
 	$plugin_url = plugin_dir_url( __FILE__ );
 	wp_enqueue_style( 'aw_style', $plugin_url . 'css/style.css' );
-	wp_enqueue_script( 'aw_functions', $plugin_url . 'js/functions.js',  array('jquery') );
+	wp_enqueue_script( 'aw_functions', $plugin_url . 'js/functions.js', array( 'jquery' ) );
 }
+
 add_action( 'wp_enqueue_scripts', 'aw_load_plugin_scripts' );
 
 function aw_image_overlay_setup() {
 
-	if ( class_exists('ET_Builder_Module')) {
+	if ( class_exists( 'ET_Builder_Module' ) ) {
 
 		class AW_Builder_Module_Image_Overlay extends ET_Builder_Module {
 			function init() {
@@ -56,7 +59,7 @@ function aw_image_overlay_setup() {
 				);
 
 				$this->fields_defaults = array(
-					'open_link'          	  => array( 'off' ),
+					'open_link'               => array( 'off' ),
 					'url_new_window'          => array( 'off' ),
 					'animation'               => array( 'left' ),
 					'sticky'                  => array( 'off' ),
@@ -69,7 +72,7 @@ function aw_image_overlay_setup() {
 					'border'                => array(),
 					'custom_margin_padding' => array(
 						'use_padding' => false,
-						'css' => array(
+						'css'         => array(
 							'important' => 'all',
 						),
 					),
@@ -98,7 +101,7 @@ function aw_image_overlay_setup() {
 
 					// All animation options
 					$animation_options = array_merge(
-						array( $default_animation_direction => $animation_options_list[$default_animation_direction] ),
+						array( $default_animation_direction => $animation_options_list[ $default_animation_direction ] ),
 						$animation_options_wo_default
 					);
 				} else {
@@ -107,7 +110,7 @@ function aw_image_overlay_setup() {
 				}
 
 				$fields = array(
-					'src' => array(
+					'src'                     => array(
 						'label'              => esc_html__( 'Image URL', 'et_builder' ),
 						'type'               => 'upload',
 						'option_category'    => 'basic_option',
@@ -116,51 +119,51 @@ function aw_image_overlay_setup() {
 						'update_text'        => esc_attr__( 'Set As Image', 'et_builder' ),
 						'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 					),
-					'alt' => array(
+					'alt'                     => array(
 						'label'           => esc_html__( 'Image Alternative Text', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'basic_option',
 						'description'     => esc_html__( 'This defines the HTML ALT text. A short description of your image can be placed here.', 'et_builder' ),
 					),
-					'title_text' => array(
+					'title_text'              => array(
 						'label'           => esc_html__( 'Image Title Text', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'basic_option',
 						'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
 					),
-					'open_link' => array(
-						'label'             => esc_html__( 'Open a URL', 'et_builder' ),
-						'type'              => 'yes_no_button',
-						'option_category'   => 'configuration',
-						'options'           => array(
+					'open_link'               => array(
+						'label'           => esc_html__( 'Open a URL', 'et_builder' ),
+						'type'            => 'yes_no_button',
+						'option_category' => 'configuration',
+						'options'         => array(
 							'off' => esc_html__( "No", 'et_builder' ),
 							'on'  => esc_html__( 'Yes', 'et_builder' ),
 						),
-						'affects'           => array(
+						'affects'         => array(
 							'#et_pb_url',
 							'#et_pb_url_new_window',
 						),
-						'description'       => esc_html__( 'Here you can choose whether or not the image should open a URL.', 'et_builder' ),
+						'description'     => esc_html__( 'Here you can choose whether or not the image should open a URL.', 'et_builder' ),
 					),
-					'url' => array(
+					'url'                     => array(
 						'label'           => esc_html__( 'Link URL', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'basic_option',
 						'depends_show_if' => 'on',
 						'description'     => esc_html__( 'If you would like your image to be a link, input your destination URL here. No link will be created if this field is left blank.', 'et_builder' ),
 					),
-					'url_new_window' => array(
-						'label'             => esc_html__( 'Url Opens', 'et_builder' ),
-						'type'              => 'select',
-						'option_category'   => 'configuration',
-						'options'           => array(
+					'url_new_window'          => array(
+						'label'           => esc_html__( 'Url Opens', 'et_builder' ),
+						'type'            => 'select',
+						'option_category' => 'configuration',
+						'options'         => array(
 							'off' => esc_html__( 'In The Same Window', 'et_builder' ),
 							'on'  => esc_html__( 'In The New Tab', 'et_builder' ),
 						),
-						'depends_show_if'   => 'on',
-						'description'       => esc_html__( 'Here you can choose whether or not your link opens in a new window', 'et_builder' ),
+						'depends_show_if' => 'on',
+						'description'     => esc_html__( 'Here you can choose whether or not your link opens in a new window', 'et_builder' ),
 					),
-					'overlay_src' => array(
+					'overlay_src'             => array(
 						'label'              => esc_html__( 'Overlay Image URL', 'et_builder' ),
 						'type'               => 'upload',
 						'option_category'    => 'basic_option',
@@ -169,24 +172,24 @@ function aw_image_overlay_setup() {
 						'update_text'        => esc_attr__( 'Set As Image', 'et_builder' ),
 						'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 					),
-					'animation' => array(
-						'label'             => esc_html__( 'Animation', 'et_builder' ),
-						'type'              => 'select',
-						'option_category'   => 'configuration',
-						'options'           => $animation_options,
-						'description'       => esc_html__( 'This controls the direction of the lazy-loading animation.', 'et_builder' ),
+					'animation'               => array(
+						'label'           => esc_html__( 'Animation', 'et_builder' ),
+						'type'            => 'select',
+						'option_category' => 'configuration',
+						'options'         => $animation_options,
+						'description'     => esc_html__( 'This controls the direction of the lazy-loading animation.', 'et_builder' ),
 					),
-					'sticky' => array(
-						'label'             => esc_html__( 'Remove Space Below The Image', 'et_builder' ),
-						'type'              => 'yes_no_button',
-						'option_category'   => 'layout',
-						'options'           => array(
-							'off'     => esc_html__( 'No', 'et_builder' ),
-							'on'      => esc_html__( 'Yes', 'et_builder' ),
+					'sticky'                  => array(
+						'label'           => esc_html__( 'Remove Space Below The Image', 'et_builder' ),
+						'type'            => 'yes_no_button',
+						'option_category' => 'layout',
+						'options'         => array(
+							'off' => esc_html__( 'No', 'et_builder' ),
+							'on'  => esc_html__( 'Yes', 'et_builder' ),
 						),
-						'description'       => esc_html__( 'Here you can choose whether or not the image should have a space below it.', 'et_builder' ),
+						'description'     => esc_html__( 'Here you can choose whether or not the image should have a space below it.', 'et_builder' ),
 					),
-					'max_width' => array(
+					'max_width'               => array(
 						'label'           => esc_html__( 'Image Max Width', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'layout',
@@ -194,33 +197,33 @@ function aw_image_overlay_setup() {
 						'mobile_options'  => true,
 						'validate_unit'   => true,
 					),
-					'force_fullwidth' => array(
-						'label'             => esc_html__( 'Force Fullwidth', 'et_builder' ),
-						'type'              => 'yes_no_button',
-						'option_category'   => 'layout',
-						'options'           => array(
+					'force_fullwidth'         => array(
+						'label'           => esc_html__( 'Force Fullwidth', 'et_builder' ),
+						'type'            => 'yes_no_button',
+						'option_category' => 'layout',
+						'options'         => array(
 							'off' => esc_html__( "No", 'et_builder' ),
 							'on'  => esc_html__( 'Yes', 'et_builder' ),
 						),
-						'tab_slug'    => 'advanced',
+						'tab_slug'        => 'advanced',
 					),
 					'always_center_on_mobile' => array(
-						'label'             => esc_html__( 'Always Center Image On Mobile', 'et_builder' ),
-						'type'              => 'yes_no_button',
-						'option_category'   => 'layout',
-						'options'           => array(
+						'label'           => esc_html__( 'Always Center Image On Mobile', 'et_builder' ),
+						'type'            => 'yes_no_button',
+						'option_category' => 'layout',
+						'options'         => array(
 							'on'  => esc_html__( 'Yes', 'et_builder' ),
 							'off' => esc_html__( "No", 'et_builder' ),
 						),
-						'tab_slug'    => 'advanced',
+						'tab_slug'        => 'advanced',
 					),
-					'max_width_tablet' => array(
+					'max_width_tablet'        => array(
 						'type' => 'skip',
 					),
-					'max_width_phone' => array(
+					'max_width_phone'         => array(
 						'type' => 'skip',
 					),
-					'disabled_on' => array(
+					'disabled_on'             => array(
 						'label'           => esc_html__( 'Disable on', 'et_builder' ),
 						'type'            => 'multiple_checkboxes',
 						'options'         => array(
@@ -232,19 +235,19 @@ function aw_image_overlay_setup() {
 						'option_category' => 'configuration',
 						'description'     => esc_html__( 'This will disable the module on selected devices', 'et_builder' ),
 					),
-					'admin_label' => array(
+					'admin_label'             => array(
 						'label'       => esc_html__( 'Admin Label', 'et_builder' ),
 						'type'        => 'text',
 						'description' => esc_html__( 'This will change the label of the module in the builder for easy identification.', 'et_builder' ),
 					),
-					'module_id' => array(
+					'module_id'               => array(
 						'label'           => esc_html__( 'CSS ID', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'configuration',
 						'tab_slug'        => 'custom_css',
 						'option_class'    => 'et_pb_custom_css_regular',
 					),
-					'module_class' => array(
+					'module_class'            => array(
 						'label'           => esc_html__( 'CSS Class', 'et_builder' ),
 						'type'            => 'text',
 						'option_category' => 'configuration',
@@ -342,10 +345,10 @@ function aw_image_overlay_setup() {
 			}
 		}
 
-		new AW_Builder_Module_Image_Overlay;
 		$aw_builder_module_image_overlay = new AW_Builder_Module_Image_Overlay();
-		add_shortcode( 'et_pb_image_overlay', array($aw_builder_module_image_overlay, '_shortcode_callback') );
+		add_shortcode( 'et_pb_image_overlay', array( $aw_builder_module_image_overlay, '_shortcode_callback' ) );
 
 	}
 }
-add_action('et_builder_ready', 'aw_image_overlay_setup');
+
+add_action( 'et_builder_ready', 'aw_image_overlay_setup' );
